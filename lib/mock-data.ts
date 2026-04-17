@@ -1,0 +1,17 @@
+import { Product, Order } from '@/types'
+
+export const MOCK_PRODUCTS: Product[] = [
+  { id: '1', name: '500ml Bottled Water', description: 'Pure, refreshing 500ml bottled water.', category: 'bottled', size: '500ml', unit: 'bottle', price_household: 2.50, price_retail: 2.20, price_wholesale: 1.80, price_corporate: 1.90, stock: 5000, active: true },
+  { id: '2', name: '1L Bottled Water', description: 'Premium 1-litre bottled water.', category: 'bottled', size: '1L', unit: 'bottle', price_household: 4.50, price_retail: 4.00, price_wholesale: 3.20, price_corporate: 3.50, stock: 3000, active: true },
+  { id: '3', name: '1.5L Bottled Water', description: 'Family-sized 1.5L pure water bottle.', category: 'bottled', size: '1.5L', unit: 'bottle', price_household: 6.00, price_retail: 5.40, price_wholesale: 4.50, price_corporate: 4.80, stock: 2000, active: true },
+  { id: '4', name: 'Sachet Water (Bag)', description: '30 sachets per bag.', category: 'sachet', size: '500ml x 30', unit: 'bag', price_household: 8.00, price_retail: 7.00, price_wholesale: 5.50, price_corporate: 6.00, stock: 8000, active: true },
+  { id: '5', name: 'Sachet Water (Crate)', description: '12 bags per crate.', category: 'sachet', size: '30-sachet bags x 12', unit: 'crate', price_household: 90.00, price_retail: 80.00, price_wholesale: 62.00, price_corporate: 68.00, stock: 400, active: true },
+  { id: '6', name: 'Empty 500ml Bottles', description: 'Food-grade PET 500ml bottles.', category: 'empty_bottle', size: '500ml', unit: 'pack of 24', price_household: 18.00, price_retail: 15.00, price_wholesale: 12.00, price_corporate: 13.00, stock: 10000, active: true },
+  { id: '7', name: 'Empty 1L Bottles', description: 'Durable 1L PET bottles.', category: 'empty_bottle', size: '1L', unit: 'pack of 12', price_household: 20.00, price_retail: 17.00, price_wholesale: 14.00, price_corporate: 15.50, stock: 6000, active: true },
+]
+
+export const MOCK_ORDERS: Order[] = [
+  { id: '1', order_number: 'CW-10421', customer_id: 'c1', customer_name: 'Kwame Mensah', customer_phone: '0244123456', segment: 'wholesale', items: [{ product_id: '5', product_name: 'Sachet Water (Crate)', quantity: 5, unit_price: 62, total: 310 }], subtotal: 310, delivery_fee: 15, total: 325, status: 'confirmed', payment_method: 'momo', payment_status: 'paid', delivery_address: '12 Industrial Ave, Tema', delivery_region: 'Greater Accra', created_at: new Date(Date.now() - 3600000).toISOString(), updated_at: new Date().toISOString() },
+  { id: '2', order_number: 'CW-10422', customer_id: 'c2', customer_name: 'Abena Owusu', customer_phone: '0201987654', segment: 'household', items: [{ product_id: '1', product_name: '500ml Bottled Water', quantity: 24, unit_price: 2.50, total: 60 }], subtotal: 60, delivery_fee: 15, total: 75, status: 'in_transit', payment_method: 'cash', payment_status: 'pending', delivery_address: '5 Osu Badu St, Accra', delivery_region: 'Greater Accra', created_at: new Date(Date.now() - 7200000).toISOString(), updated_at: new Date().toISOString() },
+  { id: '3', order_number: 'CW-10420', customer_id: 'c3', customer_name: 'Kofi Asante', customer_phone: '0277654321', segment: 'retail', items: [{ product_id: '6', product_name: 'Empty 500ml Bottles', quantity: 10, unit_price: 15, total: 150 }], subtotal: 150, delivery_fee: 15, total: 165, status: 'delivered', payment_method: 'momo', payment_status: 'paid', delivery_address: '88 Market Street, Kumasi', delivery_region: 'Ashanti', created_at: new Date(Date.now() - 86400000).toISOString(), updated_at: new Date().toISOString() },
+]
