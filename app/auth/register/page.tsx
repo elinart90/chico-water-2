@@ -7,8 +7,10 @@ import toast from 'react-hot-toast'
 import { CustomerSegment } from '@/types'
 
 const segments: { id: CustomerSegment; label: string }[] = [
-  { id: 'household', label: 'Household' }, { id: 'retail', label: 'Retail' },
-  { id: 'wholesale', label: 'Wholesale' }, { id: 'corporate', label: 'Corporate' },
+  // { id: 'household', label: 'Household' }, 
+  { id: 'retail', label: 'Retail' },
+  { id: 'wholesale', label: 'Wholesale' }, 
+  { id: 'corporate', label: 'Corporate' },
 ]
 
 export default function RegisterPage() {

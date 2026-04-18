@@ -5,16 +5,12 @@ import { BarChart3, Package, Users, Truck, TrendingUp, AlertTriangle, CheckCircl
 import { Order, Product } from '@/types'
 import { MOCK_ORDERS, MOCK_PRODUCTS } from '@/lib/mock-data'
 import { ORDER_STATUS_LABELS, ORDER_STATUS_COLORS, formatCurrency, SEGMENT_LABELS, cn } from '@/lib/utils'
-import { useSettings } from '@/components/SettingsProvider'
 
 export default function AdminDashboard() {
   const [activeTab, setActiveTab] = useState<'overview' | 'orders' | 'inventory'>('overview')
   const [orders, setOrders] = useState<Order[]>([])
   const [products, setProducts] = useState<Product[]>([])
   const [loading, setLoading] = useState(true)
-  const s = useSettings()
-  const [scrolled, setScrolled] = useState(false)
-  const isHome = false
 
   useEffect(() => {
     Promise.all([
@@ -26,8 +22,6 @@ export default function AdminDashboard() {
       setLoading(false)
     })
   }, [])
-
-  const dark = scrolled || !isHome
 
   const todayRevenue = orders.filter(o => o.status !== 'cancelled').reduce((s, o) => s + o.total, 0)
   const activeDeliveries = orders.filter(o => o.status === 'in_transit').length
@@ -70,9 +64,6 @@ export default function AdminDashboard() {
               <item.icon className="w-4 h-4" />{item.label}
             </button>
           ))}
-          <Link href="/dashboard/admin/supply-chain" className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-white/60 hover:text-white hover:bg-white/10 transition-all">
-            <Package className="w-4 h-4" /> Supply Chain
-          </Link>
           <Link href="/dashboard/admin/settings" className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-white/60 hover:text-white hover:bg-white/10 transition-all">
             <Settings className="w-4 h-4" /> Settings
           </Link>

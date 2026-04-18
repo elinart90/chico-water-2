@@ -1,25 +1,26 @@
 import { NextRequest, NextResponse } from 'next/server'
 
 const DASHBOARD_ROLES: Record<string, string[]> = {
-  '/dashboard/admin':    ['admin'],
-  '/dashboard/sales':    ['admin', 'salesperson'],
-  '/dashboard/customer': ['admin', 'customer'],
-  '/dashboard/driver':   ['admin', 'driver'],
+  '/dashboard/super-admin': ['super_admin'],
+  '/dashboard/admin':       ['admin', 'super_admin'],
+  '/dashboard/sales':       ['admin', 'super_admin', 'salesperson'],
+  '/dashboard/customer':    ['admin', 'super_admin', 'customer'],
+  '/dashboard/driver':      ['admin', 'super_admin', 'driver'],
 }
 
 const ROLE_HOME: Record<string, string> = {
-  admin:       '/dashboard/admin',
-  salesperson: '/dashboard/sales',
-  customer:    '/dashboard/customer',
-  driver:      '/dashboard/driver',
+  super_admin:  '/dashboard/super-admin',
+  admin:        '/dashboard/admin',
+  salesperson:  '/dashboard/sales',
+  customer:     '/dashboard/customer',
+  driver:       '/dashboard/driver',
 }
 
 function parseJwtPayload(token: string) {
   try {
     const base64 = token.split('.')[1]
     const padded = base64.replace(/-/g, '+').replace(/_/g, '/')
-    const decoded = atob(padded)
-    return JSON.parse(decoded)
+    return JSON.parse(atob(padded))
   } catch {
     return null
   }
@@ -28,12 +29,9 @@ function parseJwtPayload(token: string) {
 export function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl
 
-  if (!pathname.startsWith('/dashboard')) {
-    return NextResponse.next()
-  }
+  if (!pathname.startsWith('/dashboard')) return NextResponse.next()
 
   const token = req.cookies.get('chico_auth')?.value
-
   if (!token) {
     const url = req.nextUrl.clone()
     url.pathname = '/auth/login'
@@ -42,8 +40,7 @@ export function middleware(req: NextRequest) {
   }
 
   const payload = parseJwtPayload(token)
-
-  if (!payload || !payload.role) {
+  if (!payload?.role) {
     const url = req.nextUrl.clone()
     url.pathname = '/auth/login'
     return NextResponse.redirect(url)

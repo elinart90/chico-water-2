@@ -37,7 +37,7 @@ export async function POST(req: NextRequest) {
         phone: phone?.trim() || null,
         password_hash,
         role: 'customer',
-        segment: segment || 'household',
+        // segment: segment || 'household',
       })
       .select('id, name, email, role')
       .single()

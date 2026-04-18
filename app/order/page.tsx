@@ -12,7 +12,7 @@ import { useSettings } from '@/components/SettingsProvider'
 import toast from 'react-hot-toast'
 
 const segments: { id: CustomerSegment; label: string; desc: string }[] = [
-  { id: 'household', label: 'Household', desc: 'Personal home delivery' },
+  // { id: 'household', label: 'Household', desc: 'Personal home delivery' }, remove household from order
   { id: 'retail', label: 'Retail', desc: 'Shops & kiosks' },
   { id: 'wholesale', label: 'Wholesale', desc: 'Bulk orders, best rates' },
   { id: 'corporate', label: 'Corporate', desc: 'Office & company supply' },

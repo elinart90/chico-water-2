@@ -1,7 +1,7 @@
 export type CustomerSegment = 'household' | 'retail' | 'wholesale' | 'corporate'
 export type OrderStatus = 'pending' | 'confirmed' | 'packed' | 'in_transit' | 'delivered' | 'cancelled'
 export type PaymentMethod = 'momo' | 'card' | 'cash'
-export type UserRole = 'customer' | 'salesperson' | 'admin' | 'driver'
+export type UserRole = 'customer' | 'salesperson' | 'admin' | 'driver' | 'super_admin'
 
 export interface User {
   id: string

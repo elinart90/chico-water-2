@@ -25,10 +25,34 @@ function useCountUp(target: number, duration = 2000, start = false) {
 }
 
 const segments = [
-  { id: 'household', label: 'Household', icon: '🏠', desc: 'Home delivery for families' },
-  { id: 'retail', label: 'Retail', icon: '🏪', desc: 'Shops, kiosks & resellers' },
-  { id: 'wholesale', label: 'Wholesale', icon: '📦', desc: 'Bulk orders, best rates', featured: true },
-  { id: 'corporate', label: 'Corporate', icon: '🏢', desc: 'Office & company supply' },
+  {
+    id: 'retail',
+    label: 'Retail',
+    icon: '🏪',
+    desc: 'Perfect for shops, kiosks, and resellers looking for reliable stock.',
+    color: 'from-green-50 to-emerald-100',
+    border: 'border-green-200',
+    tag: 'text-green-700 bg-green-100',
+  },
+  {
+    id: 'wholesale',
+    label: 'Wholesale',
+    icon: '📦',
+    desc: 'Bulk orders at the best rates. Ideal for distributors and large buyers.',
+    color: 'from-water-50 to-blue-100',
+    border: 'border-water-300',
+    tag: 'text-water-700 bg-water-100',
+    featured: true,
+  },
+  {
+    id: 'corporate',
+    label: 'Corporate',
+    icon: '🏢',
+    desc: 'Dedicated supply for offices, institutions, and company accounts.',
+    color: 'from-purple-50 to-violet-100',
+    border: 'border-purple-200',
+    tag: 'text-purple-700 bg-purple-100',
+  },
 ]
 
 const features = [
@@ -40,8 +64,8 @@ const features = [
 
 const testimonials = [
   { name: 'Kwame Mensah', role: 'Wholesale buyer, Tema', text: 'Chico Water has been our supplier for 2 years. Consistent quality, on-time delivery, no complaints.', stars: 5 },
-  { name: 'Abena Owusu', role: 'Household, Osu Accra', text: 'I order every week. The ordering process is so easy and delivery guys are always professional.', stars: 5 },
-  { name: 'Emmanuel K.', role: 'Store owner, Kumasi', text: 'Sachet water crates arrive sealed and on time. Better pricing than any other supplier I\'ve tried.', stars: 5 },
+  { name: 'Emmanuel K.', role: 'Store owner, Kumasi', text: "Sachet water crates arrive sealed and on time. Better pricing than any other supplier I've tried.", stars: 5 },
+  { name: 'Abena Owusu', role: 'Office Manager, Accra', text: 'Our corporate account is seamless. One call and water is here. The team is professional and reliable.', stars: 5 },
 ]
 
 export default function HomePage() {
@@ -76,17 +100,17 @@ export default function HomePage() {
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32 lg:py-40">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div>
-              <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur border border-white/20 rounded-full px-4 py-1.5 mb-8 animate-fade-in">
+              <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur border border-white/20 rounded-full px-4 py-1.5 mb-8">
                 <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
                 <span className="text-white/90 text-sm font-medium">Now delivering across all 16 regions</span>
               </div>
-              <h1 className="text-5xl lg:text-6xl xl:text-7xl font-black text-white leading-[1.05] tracking-tight mb-6 animate-fade-up">
+              <h1 className="text-5xl lg:text-6xl xl:text-7xl font-black text-white leading-[1.05] tracking-tight mb-6">
                 {s.home_hero_title || 'Inspire Natural Mineral Water'}
               </h1>
-              <p className="text-white/70 text-lg lg:text-xl leading-relaxed mb-10 max-w-lg animate-fade-up">
-                {s.home_hero_subtitle || 'Bottled water, sachet water, and packaging solutions — for households, businesses, and wholesale buyers.'}
+              <p className="text-white/70 text-lg lg:text-xl leading-relaxed mb-10 max-w-lg">
+                {'Bottled water, sachet water, and packaging solutions — for businesses, and wholesale buyers.'}
               </p>
-              <div className="flex flex-col sm:flex-row gap-4 animate-fade-up">
+              <div className="flex flex-col sm:flex-row gap-4">
                 <Link href="/order" className="inline-flex items-center justify-center gap-2 bg-white text-water-700 font-bold px-8 py-4 rounded-2xl text-base hover:bg-water-50 transition-all hover:shadow-2xl hover:-translate-y-1">
                   Order Now <ArrowRight className="w-5 h-5" />
                 </Link>
@@ -94,7 +118,7 @@ export default function HomePage() {
                   View Products
                 </Link>
               </div>
-              <div className="mt-10 flex items-center gap-6 animate-fade-up">
+              <div className="mt-10 flex items-center gap-6">
                 <div className="flex -space-x-2">
                   {['KM','AO','EK','BT'].map((init, i) => (
                     <div key={i} className="w-9 h-9 rounded-full bg-gradient-to-br from-water-400 to-water-600 border-2 border-white flex items-center justify-center text-white text-xs font-bold">{init}</div>
@@ -167,26 +191,54 @@ export default function HomePage() {
 
       {/* SEGMENTS */}
       <section className="py-24 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-14">
             <div className="section-tag mb-4">Who We Serve</div>
             <h2 className="text-4xl font-black text-gray-900 mb-4">Choose your category</h2>
             <p className="text-gray-500 text-lg max-w-xl mx-auto">Tailored pricing and service for every type of customer.</p>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {segments.map(seg => (
               <Link key={seg.id} href={`/order?segment=${seg.id}`}
-                className={`group relative card p-6 cursor-pointer hover:-translate-y-1 transition-all duration-300 ${seg.featured ? 'ring-2 ring-water-600' : ''}`}>
-                {seg.featured && <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-water-600 text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider">Best Rates</div>}
-                <div className="text-4xl mb-4">{seg.icon}</div>
-                <h3 className="font-bold text-gray-900 text-lg mb-1">{seg.label}</h3>
-                <p className="text-gray-500 text-sm mb-4">{seg.desc}</p>
-                <div className="flex items-center text-water-600 text-sm font-semibold gap-1 group-hover:gap-2 transition-all">
-                  Order now <ChevronRight className="w-4 h-4" />
+                className={`group relative flex flex-col rounded-3xl border-2 ${seg.border} overflow-hidden hover:-translate-y-2 transition-all duration-300 shadow-sm hover:shadow-xl`}>
+                {seg.featured && (
+                  <div className="absolute top-4 right-4 bg-water-600 text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider z-10">
+                    Best Rates
+                  </div>
+                )}
+                {/* Colored top banner */}
+                <div className={`bg-gradient-to-br ${seg.color} h-36 flex items-center justify-center text-6xl`}>
+                  {seg.icon}
+                </div>
+                {/* Content */}
+                <div className="flex-1 bg-white p-6 flex flex-col">
+                  <div className="flex items-center gap-2 mb-3">
+                    <h3 className="font-black text-gray-900 text-xl">{seg.label}</h3>
+                    <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wide ${seg.tag}`}>
+                      {seg.id}
+                    </span>
+                  </div>
+                  <p className="text-gray-500 text-sm leading-relaxed flex-1 mb-5">{seg.desc}</p>
+                  <div className="flex items-center justify-between">
+                    <span className="text-water-600 text-sm font-bold group-hover:underline underline-offset-2">
+                      Order now
+                    </span>
+                    <div className="w-8 h-8 rounded-full bg-water-600 flex items-center justify-center group-hover:bg-water-700 transition-colors">
+                      <ArrowRight className="w-4 h-4 text-white" />
+                    </div>
+                  </div>
                 </div>
               </Link>
             ))}
           </div>
+
+          <p className="text-center text-sm text-gray-400 mt-8">
+            Are you a household customer?{' '}
+            <Link href="/order?segment=household" className="text-water-600 font-semibold hover:underline">
+              Order here →
+            </Link>
+          </p>
         </div>
       </section>
 

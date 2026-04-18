@@ -37,7 +37,7 @@ export const DEFAULTS: SettingsMap = {
   order_notes_enabled:          'true',
   order_preferred_date_enabled: 'true',
   home_hero_title:              'Inspire Natural Mineral Water',
-  home_hero_subtitle:           'Bottled water, sachet water, and packaging solutions — for households, businesses, and wholesale buyers across Ghana.',
+  home_hero_subtitle:           'Bottled water, sachet water, and packaging solutions — for businesses, and wholesale buyers across Ghana.',
   home_announcement:            '',
   home_announcement_on:         'false',
   home_stats_orders:            '50000',
