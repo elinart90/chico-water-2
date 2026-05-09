@@ -6,7 +6,7 @@ export async function PATCH(req: NextRequest, { params }: { params: { id: string
   try {
     const user = getCurrentUser()
     if (!user) return NextResponse.json({ message: 'Unauthorised' }, { status: 401 })
-    if (user.role !== 'admin') return NextResponse.json({ message: 'Only admin can approve requests' }, { status: 403 })
+    if (!['admin', 'super_admin'].includes(user.role)) return NextResponse.json({ message: 'Only admin can approve requests' }, { status: 403 })
 
     const { action, approval_note } = await req.json()
     if (!['approved', 'rejected', 'purchased', 'cancelled'].includes(action)) {
