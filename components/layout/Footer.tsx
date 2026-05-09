@@ -51,7 +51,7 @@ export default function Footer() {
             <ul className="space-y-3">
               <li className="flex items-start gap-3"><MapPin className="w-4 h-4 text-water-400 mt-0.5 shrink-0" /><span className="text-sm">{s.business_address || 'Industrial Area, Accra, Ghana'}</span></li>
               <li className="flex items-center gap-3"><Phone className="w-4 h-4 text-water-400 shrink-0" /><a href={`tel:${s.business_phone}`} className="text-sm hover:text-water-400">{s.business_phone || '+233200000000'}</a></li>
-              <li className="flex items-center gap-3"><Mail className="w-4 h-4 text-water-400 shrink-0" /><a href={`mailto:${s.business_email}`} className="text-sm hover:text-water-400">{s.business_email || 'info@chicowaterlimited.com'}</a></li>
+              <li className="flex items-center gap-3"><Mail className="w-4 h-4 text-water-400 shrink-0" /><a href={`mailto:${s.business_email}`} className="text-sm hover:text-water-400">{'info@chicowaterlimited.com'}</a></li>
             </ul>
             <div className="mt-5 pt-5 border-t border-gray-800">
               <p className="text-xs text-gray-600 mb-2">Delivery hours</p>
