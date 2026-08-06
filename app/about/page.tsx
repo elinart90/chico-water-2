@@ -1,8 +1,9 @@
 'use client'
 import Navbar from '@/components/layout/Navbar'
+import Image from 'next/image'
 import { useSettings } from '@/components/SettingsProvider'
 import Footer from '@/components/layout/Footer'
-import { Shield, Award, Leaf, Heart, MapPin, Users } from 'lucide-react'
+import { Shield, Award, Leaf, Heart, MapPin, User } from 'lucide-react'
 
 const values = [
   { icon: Shield, title: 'Quality Assured', desc: 'Every batch is tested and certified before it reaches you. We meet and exceed Ghana Standards Authority requirements.' },
@@ -12,103 +13,134 @@ const values = [
 ]
 
 const team = [
-  { name: 'Emmanuel Chico', role: 'Founder & CEO', initials: 'EC' },
-  { name: 'Abena Asante', role: 'Operations Director', initials: 'AA' },
-  { name: 'Kofi Mensah', role: 'Sales Manager', initials: 'KM' },
-  { name: 'Grace Twumasi', role: 'Quality Control', initials: 'GT' },
+  { name: 'Stephen Kingsford Boamah', role: 'Founder & CEO', photo: '' },
+  { name: 'Abena Asante', role: 'Operations Director', photo: '' },
+  { name: 'Kofi Mensah', role: 'Sales Manager', photo: '' },
+  { name: 'Grace Twumasi', role: 'Quality Control', photo: '' },
 ]
 
 export default function AboutPage() {
   const s = useSettings()
-  const founded = s.business_founded || '2008'
+  const founded = s.business_founded || '2026'
   const name = s.business_name || 'Chico Water Limited'
-  const address = s.business_address || 'Industrial Area, Accra, Ghana'
-  const statsOrders = s.home_stats_orders || '50,000'
-  const statsCustomers = s.home_stats_customers || '12,000'
+  const address = s.business_address || 'Pakyi No.1, Kumasi, Ghana'
+  const statsOrders = s.home_stats_orders || '50'
   const statsRegions = s.home_stats_regions || '16'
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-slate-50">
       <Navbar />
 
-      {/* Hero */}
-      <div className="bg-gradient-to-br from-water-900 to-water-700 pt-28 pb-20">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div className="section-tag bg-white/10 text-white border border-white/20 mb-6">Our Story</div>
-          <h1 className="text-5xl font-black text-white mb-6 leading-tight">Bringing pure water<br />to every Ghanaian.</h1>
-          <p className="text-white/70 text-xl max-w-2xl mx-auto leading-relaxed">
-            {`Founded in ${founded} in ${address.split(',')[1]?.trim() || 'Accra'}, ${name} started as a small bottling operation with one goal: deliver clean, affordable water to Ghanaian families and businesses.`}
+      <section className="relative overflow-hidden bg-slate-950">
+        <Image
+          src="/build1.jpg"
+          alt=""
+          fill
+          priority
+          className="object-cover object-center"
+          sizes="100vw"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-slate-950/85 via-slate-950/70 to-slate-950/95" />
+        <div className="absolute inset-0 bg-slate-950/30" />
+        <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-32 pb-24 text-center">
+          <div className="section-tag-light mb-6">Our Story</div>
+          <h1 className="heading-hero text-4xl lg:text-5xl text-white mb-6 leading-tight">
+            Bringing pure water to every Ghanaian.
+          </h1>
+          <p className="text-white/80 text-lg lg:text-xl max-w-2xl mx-auto leading-relaxed">
+            {`Founded in ${founded} in Kumasi, ${name} started as a small bottling operation in Pakyi No.1 with one goal: deliver clean, affordable water to Ghanaian families and businesses.`}
           </p>
         </div>
-      </div>
+      </section>
 
-      {/* Story */}
       <section className="py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div>
               <div className="section-tag mb-6">Our Mission</div>
-              <h2 className="text-4xl font-black text-gray-900 mb-6">Water is not a luxury. It's a right.</h2>
-              <div className="space-y-4 text-gray-600 leading-relaxed">
-                <p>{name} was built on a simple idea: every Ghanaian — whether in Accra, Kumasi, or a rural community — deserves access to clean, safe drinking water at an honest price.</p>
-                <p>What started as a 50-employee operation delivering to 200 homes in Greater Accra has grown into a national supplier serving over 12,000 customers across all 16 regions of Ghana.</p>
-                <p>We sell bottled water, sachet water, and quality packaging to households, retail shops, wholesale distributors, and corporate accounts — each with pricing and service designed for their specific needs.</p>
+              <h2 className="heading-display text-4xl text-slate-900 mb-6">Water is not a luxury. It&apos;s a right.</h2>
+              <div className="space-y-4 text-slate-600 leading-relaxed">
+                <p>{name} was built on a simple idea: every Ghanaian — whether in Kumasi, Accra, or a rural community — deserves access to clean, safe drinking water at an honest price.</p>
+                <p>What started as a small operation in Pakyi No.1 has grown into a trusted supplier serving over 12,000 customers across all 16 regions of Ghana.</p>
+                <p>We sell bottled water, sachet water, and quality packaging to retail shops, wholesale distributors, and corporate accounts — each with pricing and service designed for their specific needs.</p>
               </div>
             </div>
-            <div className="grid grid-cols-2 gap-4">
-              {[
-                { value: founded, label: 'Founded', icon: Award },
-                { value: parseInt(statsCustomers).toLocaleString() + '+', label: 'Customers', icon: Users },
-                { value: statsRegions, label: 'Regions served', icon: MapPin },
-                { value: parseInt(statsOrders).toLocaleString() + '+', label: 'Orders delivered', icon: Shield },
-              ].map(s => (
-                <div key={s.label} className="bg-gray-50 rounded-2xl p-6 text-center">
-                  <s.icon className="w-7 h-7 text-water-600 mx-auto mb-3" />
-                  <div className="text-3xl font-black text-gray-900 mb-1">{s.value}</div>
-                  <div className="text-sm text-gray-500">{s.label}</div>
-                </div>
-              ))}
+            <div className="space-y-5">
+              <div className="relative rounded-2xl overflow-hidden shadow-medium aspect-[4/3] ring-1 ring-slate-200/60">
+                <img
+                  src="/build1.jpg"
+                  alt="Chico Water bottling facility"
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-transparent to-transparent" />
+                <p className="absolute bottom-5 left-5 right-5 text-white text-sm font-medium">
+                  Our bottling facility in Pakyi No.1, Kumasi
+                </p>
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                {[
+                  { value: founded, label: 'Founded', icon: Award },
+                  { value: statsRegions, label: 'Regions served', icon: MapPin },
+                  { value: statsOrders, label: 'Orders delivered', icon: Shield },
+                ].map(stat => (
+                  <div key={stat.label} className="stat-card py-5">
+                    <stat.icon className="w-6 h-6 text-water-600 mx-auto mb-2" />
+                    <div className="text-2xl font-display font-bold text-slate-900 mb-0.5">{stat.value}</div>
+                    <div className="text-xs text-slate-500 font-medium">{stat.label}</div>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Values */}
-      <section className="py-24 bg-gray-50">
+      <section className="py-24 bg-slate-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-14">
             <div className="section-tag mb-4">What We Stand For</div>
-            <h2 className="text-4xl font-black text-gray-900">Our values</h2>
+            <h2 className="heading-display text-4xl text-slate-900">Our values</h2>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {values.map(v => (
-              <div key={v.title} className="card p-6">
-                <div className="w-12 h-12 bg-water-50 rounded-xl flex items-center justify-center mb-4">
+              <div key={v.title} className="card-interactive p-7">
+                <div className="w-12 h-12 bg-gradient-to-br from-water-50 to-water-100 rounded-xl flex items-center justify-center mb-5">
                   <v.icon className="w-6 h-6 text-water-600" />
                 </div>
-                <h3 className="font-bold text-gray-900 mb-2">{v.title}</h3>
-                <p className="text-gray-500 text-sm leading-relaxed">{v.desc}</p>
+                <h3 className="font-display font-bold text-slate-900 mb-2">{v.title}</h3>
+                <p className="text-slate-500 text-sm leading-relaxed">{v.desc}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Team */}
       <section className="py-24 bg-white">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-14">
             <div className="section-tag mb-4">Our Team</div>
-            <h2 className="text-4xl font-black text-gray-900">The people behind the water</h2>
+            <h2 className="heading-display text-4xl text-slate-900">The people behind the water</h2>
           </div>
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
             {team.map(member => (
-              <div key={member.name} className="card p-6 text-center">
-                <div className="w-16 h-16 bg-gradient-to-br from-water-400 to-water-700 rounded-full flex items-center justify-center text-white font-black text-xl mx-auto mb-4">
-                  {member.initials}
+              <div key={member.name} className="card-interactive p-6 text-center">
+                <div className="relative w-24 h-24 mx-auto mb-4 rounded-2xl overflow-hidden bg-slate-100 ring-1 ring-slate-200/80">
+                  {member.photo ? (
+                    <Image
+                      src={member.photo}
+                      alt={member.name}
+                      fill
+                      className="object-cover object-center"
+                      sizes="96px"
+                    />
+                  ) : (
+                    <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-slate-100 to-slate-200/80">
+                      <User className="w-9 h-9 text-slate-400" strokeWidth={1.5} />
+                    </div>
+                  )}
                 </div>
-                <h3 className="font-bold text-gray-900">{member.name}</h3>
-                <p className="text-gray-500 text-sm">{member.role}</p>
+                <h3 className="font-display font-bold text-slate-900 leading-snug">{member.name}</h3>
+                <p className="text-slate-500 text-sm mt-1">{member.role}</p>
               </div>
             ))}
           </div>

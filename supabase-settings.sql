@@ -25,9 +25,9 @@ insert into settings (key, value, label, description, category, type, is_public)
   ('business_email',       'orders@chicowater.com',         'Business Email',       'Main contact email shown on the website',               'Business',  'email',   true),
   ('business_phone',       '+233200000000',                 'Business Phone',       'Primary phone number',                                  'Business',  'phone',   true),
   ('business_whatsapp',    '233200000000',                  'WhatsApp Number',      'Without the + sign (used for wa.me links)',             'Business',  'phone',   true),
-  ('business_address',     'Industrial Area, Accra, Ghana', 'Physical Address',     'Your warehouse or office address',                     'Business',  'text',    true),
+  ('business_address',     'Pakyi No.1, Kumasi, Ghana', 'Physical Address',     'Your warehouse or office address',                     'Business',  'text',    true),
   ('business_website',     'https://chicowater.com',        'Website URL',          'Your public-facing website URL',                       'Business',  'url',     true),
-  ('business_founded',     '2008',                          'Year Founded',         'Year the company was established',                     'Business',  'number',  true),
+  ('business_founded',     '2026',                          'Year Founded',         'Year the company was established',                     'Business',  'number',  true),
   ('business_logo_url',    '',                              'Logo URL',             'URL to your logo image (upload to Supabase Storage)',  'Business',  'url',     true),
   ('business_primary_color','#0077B6',                      'Brand Primary Color',  'Main brand color used across the site',                'Business',  'color',   true),
   ('business_tagline_2',   'Delivering purity to homes, businesses, and communities.', 'Footer Description', 'Short description shown in footer', 'Business', 'textarea', true);
@@ -132,7 +132,7 @@ insert into settings (key, value, label, description, category, type, is_public)
   ('home_hero_subtitle',    'Bottled water, sachet water, and packaging solutions — for households, businesses, and wholesale buyers.', 'Hero Subtitle', 'Sub-text under hero title', 'Content', 'textarea', true),
   ('home_announcement',     '',                                   'Announcement Banner',  'If set, shows a banner at the top of the site',        'Content',   'text',    true),
   ('home_announcement_on',  'false',                              'Show Announcement',    'Toggle the announcement banner on or off',             'Content',   'boolean', true),
-  ('home_stats_orders',     '50000',                              'Stat — Orders',        'Number shown in the homepage stats bar',               'Content',   'number',  true),
+  ('home_stats_orders',     '50',                                 'Stat — Orders',        'Number shown in the homepage stats bar',               'Content',   'number',  true),
   ('home_stats_customers',  '12000',                              'Stat — Customers',     'Number shown in the homepage stats bar',               'Content',   'number',  true),
   ('home_stats_regions',    '16',                                 'Stat — Regions',       'Number shown in the homepage stats bar',               'Content',   'number',  true),
   ('home_testimonials_on',  'true',                               'Show Testimonials',    'Show/hide the customer testimonials section',          'Content',   'boolean', true);

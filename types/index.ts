@@ -26,6 +26,7 @@ export interface Product {
   stock: number
   unit: string
   image_url?: string
+  video_url?: string
 }
 
 export interface OrderItem {

@@ -48,7 +48,7 @@ NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
 SUPABASE_SERVICE_ROLE_KEY=your-service-role-key
 JWT_SECRET=your-long-random-secret
-NEXT_PUBLIC_APP_URL=http://localhost:3000
+NEXT_PUBLIC_APP_URL=http://localhost:6001
 \`\`\`
 
 ### 3. Set up Supabase
@@ -64,7 +64,7 @@ NEXT_PUBLIC_APP_URL=http://localhost:3000
 npm run dev
 \`\`\`
 
-Open [http://localhost:3000](http://localhost:3000)
+Open [http://localhost:6001](http://localhost:6001)
 
 ---
 
