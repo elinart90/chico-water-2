@@ -3,7 +3,7 @@ import Navbar from '@/components/layout/Navbar'
 import Image from 'next/image'
 import { useSettings } from '@/components/SettingsProvider'
 import Footer from '@/components/layout/Footer'
-import { Shield, Award, Leaf, Heart, MapPin, User } from 'lucide-react'
+import { Shield, Award, Leaf, Heart, MapPin, Users, User } from 'lucide-react'
 
 const values = [
   { icon: Shield, title: 'Quality Assured', desc: 'Every batch is tested and certified before it reaches you. We meet and exceed Ghana Standards Authority requirements.' },
@@ -21,11 +21,11 @@ const team = [
 
 export default function AboutPage() {
   const s = useSettings()
-  const founded = s.business_founded || '2026'
+  const founded = s.business_founded || '2008'
   const name = s.business_name || 'Chico Water Limited'
-  const address = s.business_address || 'Pakyi No.1, Kumasi, Ghana'
-  const statsOrders = s.home_stats_orders || '50'
+  const statsCustomers = parseInt(s.home_stats_customers || '12000').toLocaleString() + '+'
   const statsRegions = s.home_stats_regions || '16'
+  const statsOrders = parseInt(s.home_stats_orders || '50000').toLocaleString() + '+'
 
   return (
     <div className="min-h-screen bg-slate-50">
@@ -48,7 +48,7 @@ export default function AboutPage() {
             Bringing pure water to every Ghanaian.
           </h1>
           <p className="text-white/80 text-lg lg:text-xl max-w-2xl mx-auto leading-relaxed">
-            {`Founded in ${founded} in Kumasi, ${name} started as a small bottling operation in Pakyi No.1 with one goal: deliver clean, affordable water to Ghanaian families and businesses.`}
+            {`Founded in ${founded}, ${name} started as a small bottling operation with one goal: deliver clean, affordable water to Ghanaian families and businesses.`}
           </p>
         </div>
       </section>
@@ -60,8 +60,8 @@ export default function AboutPage() {
               <div className="section-tag mb-6">Our Mission</div>
               <h2 className="heading-display text-4xl text-slate-900 mb-6">Water is not a luxury. It&apos;s a right.</h2>
               <div className="space-y-4 text-slate-600 leading-relaxed">
-                <p>{name} was built on a simple idea: every Ghanaian — whether in Kumasi, Accra, or a rural community — deserves access to clean, safe drinking water at an honest price.</p>
-                <p>What started as a small operation in Pakyi No.1 has grown into a trusted supplier serving over 12,000 customers across all 16 regions of Ghana.</p>
+                <p>{name} was built on a simple idea: every Ghanaian — whether in a city or a rural community — deserves access to clean, safe drinking water at an honest price.</p>
+                <p>What started as a small bottling operation has grown into a trusted supplier serving {statsCustomers.replace('+', '')}+ customers across all {statsRegions} regions of Ghana.</p>
                 <p>We sell bottled water, sachet water, and quality packaging to retail shops, wholesale distributors, and corporate accounts — each with pricing and service designed for their specific needs.</p>
               </div>
             </div>
@@ -74,12 +74,13 @@ export default function AboutPage() {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-transparent to-transparent" />
                 <p className="absolute bottom-5 left-5 right-5 text-white text-sm font-medium">
-                  Our bottling facility in Pakyi No.1, Kumasi
+                  Our bottling facility
                 </p>
               </div>
               <div className="grid grid-cols-2 gap-4">
                 {[
                   { value: founded, label: 'Founded', icon: Award },
+                  { value: statsCustomers, label: 'Customers', icon: Users },
                   { value: statsRegions, label: 'Regions served', icon: MapPin },
                   { value: statsOrders, label: 'Orders delivered', icon: Shield },
                 ].map(stat => (

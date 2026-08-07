@@ -7,7 +7,7 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export function formatCurrency(amount: number) {
-  return `GH₵ ${amount.toFixed(2)}`
+  return `GH₵ ${Number(amount).toFixed(2)}`
 }
 
 export function generateOrderNumber() {
@@ -16,12 +16,8 @@ export function generateOrderNumber() {
 }
 
 export const ORDER_STATUS_LABELS: Record<OrderStatus, string> = {
-  pending: 'Pending',
-  confirmed: 'Confirmed',
-  packed: 'Packed',
-  in_transit: 'In Transit',
-  delivered: 'Delivered',
-  cancelled: 'Cancelled',
+  pending: 'Pending', confirmed: 'Confirmed', packed: 'Packed',
+  in_transit: 'In Transit', delivered: 'Delivered', cancelled: 'Cancelled',
 }
 
 export const ORDER_STATUS_COLORS: Record<OrderStatus, string> = {
@@ -34,16 +30,14 @@ export const ORDER_STATUS_COLORS: Record<OrderStatus, string> = {
 }
 
 export const SEGMENT_LABELS: Record<CustomerSegment, string> = {
-  household: 'Household',
-  retail: 'Retail',
-  wholesale: 'Wholesale',
-  corporate: 'Corporate',
+  household: 'Household', retail: 'Retail',
+  wholesale: 'Wholesale', corporate: 'Corporate',
 }
 
 export const GHANA_REGIONS = [
   'Greater Accra', 'Ashanti', 'Western', 'Eastern', 'Central',
   'Northern', 'Upper East', 'Upper West', 'Volta', 'Brong-Ahafo',
-  'Oti', 'Ahafo', 'Bono East', 'North East', 'Savannah', 'Western North'
+  'Oti', 'Ahafo', 'Bono East', 'North East', 'Savannah', 'Western North',
 ]
 
 export const DELIVERY_FEE = 15

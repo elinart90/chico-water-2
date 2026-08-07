@@ -5,43 +5,43 @@ export const MOCK_PRODUCTS: Product[] = [
     id: '1', name: '500ml Bottled Water', description: 'Pure, refreshing 500ml bottled water — perfect for on-the-go.',
     category: 'bottled', size: '500ml', unit: 'bottle',
     price_household: 2.50, price_retail: 2.20, price_wholesale: 1.80, price_corporate: 1.90,
-    stock: 5000, image_url: '/chi1.jpg'
+    stock: 5000, image_url: '/chi1.jpg', active: true
   },
   {
     id: '2', name: '1L Bottled Water', description: 'Our 1-litre premium bottled water for home and office.',
     category: 'bottled', size: '1L', unit: 'bottle',
     price_household: 4.50, price_retail: 4.00, price_wholesale: 3.20, price_corporate: 3.50,
-    stock: 3000, image_url: '', video_url: '/vid1.mp4'
+    stock: 3000, image_url: '', video_url: '/vid1.mp4', active: true
   },
   {
     id: '3', name: '1.5L Bottled Water', description: 'Family-sized 1.5L pure water bottle.',
     category: 'bottled', size: '1.5L', unit: 'bottle',
     price_household: 6.00, price_retail: 5.40, price_wholesale: 4.50, price_corporate: 4.80,
-    stock: 2000, image_url: '/ch3.jpg'
+    stock: 2000, image_url: '/ch3.jpg', active: true
   },
   {
     id: '4', name: 'Sachet Water (Bag)', description: '30 sachets of pure 500ml water per bag.',
     category: 'sachet', size: '500ml x 30', unit: 'bag',
     price_household: 8.00, price_retail: 7.00, price_wholesale: 5.50, price_corporate: 6.00,
-    stock: 8000, image_url: '', video_url: '/sach.mp4'
+    stock: 8000, image_url: '', video_url: '/sach.mp4', active: true
   },
   {
     id: '5', name: 'Sachet Water (Crate)', description: '12 bags per crate — ideal for wholesale buyers.',
     category: 'sachet', size: '30-sachet bags x 12', unit: 'crate',
     price_household: 90.00, price_retail: 80.00, price_wholesale: 62.00, price_corporate: 68.00,
-    stock: 400, image_url: '', video_url: '/sach.mp4'
+    stock: 400, image_url: '', video_url: '/sach.mp4', active: true
   },
   {
     id: '6', name: 'Empty 500ml Bottles', description: 'Premium empty 500ml PET bottles, food-grade.',
     category: 'empty_bottle', size: '500ml', unit: 'pack of 24',
     price_household: 18.00, price_retail: 15.00, price_wholesale: 12.00, price_corporate: 13.00,
-    stock: 10000, image_url: '', video_url: '/video4.mp4'
+    stock: 10000, image_url: '', video_url: '/video4.mp4', active: true
   },
   {
     id: '7', name: 'Empty 1L Bottles', description: 'Durable 1-litre empty PET bottles.',
     category: 'empty_bottle', size: '1L', unit: 'pack of 12',
     price_household: 20.00, price_retail: 17.00, price_wholesale: 14.00, price_corporate: 15.50,
-    stock: 6000, image_url: '', video_url: '/video4.mp4'
+    stock: 6000, image_url: '', video_url: '/video4.mp4', active: true
   },
 ]
 

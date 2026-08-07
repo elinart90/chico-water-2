@@ -1,7 +1,7 @@
 export type CustomerSegment = 'household' | 'retail' | 'wholesale' | 'corporate'
 export type OrderStatus = 'pending' | 'confirmed' | 'packed' | 'in_transit' | 'delivered' | 'cancelled'
 export type PaymentMethod = 'momo' | 'card' | 'cash'
-export type UserRole = 'customer' | 'salesperson' | 'admin' | 'driver'
+export type UserRole = 'customer' | 'salesperson' | 'admin' | 'driver' | 'super_admin'
 
 export interface User {
   id: string
@@ -27,6 +27,7 @@ export interface Product {
   unit: string
   image_url?: string
   video_url?: string
+  active: boolean
 }
 
 export interface OrderItem {
@@ -40,7 +41,7 @@ export interface OrderItem {
 export interface Order {
   id: string
   order_number: string
-  customer_id: string
+  customer_id?: string
   customer_name: string
   customer_phone: string
   segment: CustomerSegment
@@ -66,4 +67,11 @@ export interface InventoryItem {
   product_name: string
   stock: number
   low_stock_threshold: number
+}
+
+export interface AuthUser {
+  id: string
+  email: string
+  role: UserRole
+  name: string
 }

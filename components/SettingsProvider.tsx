@@ -9,22 +9,23 @@ type SettingsContextType = { settings: SettingsMap; state: LoadState }
 
 const SettingsContext = createContext<SettingsContextType>({ settings: {}, state: 'loading' })
 
-const CACHE_KEY = 'chico_settings_cache'
+const CACHE_KEY = 'chico_settings_v1'
 const CACHE_TTL = 10 * 60 * 1000
 const FETCH_TIMEOUT = 8000
 const MAX_RETRIES = 2
 
 export const DEFAULTS: SettingsMap = {
   business_name:                'Chico Water Limited Company',
-  business_tagline:             'Pure water, anywhere in Ghana.',
+  business_tagline:             'Inspire Natural Mineral Water',
   business_tagline_2:           "Ghana's premier water supplier — delivering purity to homes, businesses, and communities.",
-  business_email:               'orders@chicowater.com',
+  business_email:               'info@chicowaterlimited.com',
   business_phone:               '+233200000000',
   business_whatsapp:            '233200000000',
-  business_address:             'Pakyi No.1, Kumasi, Ghana',
-  business_website:             'https://chicowater.com',
-  business_founded:             '2026',
+  business_address:             'Industrial Area, Accra, Ghana',
+  business_website:             'https://chicowaterlimited.com',
+  business_founded:             '2008',
   business_primary_color:       '#0077B6',
+  business_logo_url:            'https://vlufaqecdxfdvmpxmfas.supabase.co/storage/v1/object/public/assets/chico-logo.png',
   delivery_fee_default:         '15',
   delivery_hours_open:          '7:00 AM',
   delivery_hours_close:         '6:00 PM',
@@ -40,10 +41,10 @@ export const DEFAULTS: SettingsMap = {
   order_notes_enabled:          'true',
   order_preferred_date_enabled: 'true',
   home_hero_title:              'Inspire Natural Mineral Water',
-  home_hero_subtitle:           'Bottled water, sachet water, and packaging solutions — for businesses, and wholesale buyers.',
+  home_hero_subtitle:           'Bottled water, sachet water, and packaging solutions — for businesses, and wholesale buyers across Ghana.',
   home_announcement:            '',
   home_announcement_on:         'false',
-  home_stats_orders:            '50',
+  home_stats_orders:            '50000',
   home_stats_customers:         '12000',
   home_stats_regions:           '16',
   inventory_hide_out_of_stock:  'false',

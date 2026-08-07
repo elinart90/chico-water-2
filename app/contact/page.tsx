@@ -14,8 +14,8 @@ export default function ContactPage() {
   const s = useSettings()
 
   const phone = s.business_phone || '+233 20 000 0000'
-  const email = s.business_email || 'orders@chicowater.com'
-  const address = s.business_address || 'Pakyi No.1, Kumasi, Ghana'
+  const email = s.business_email || 'info@chicowaterlimited.com'
+  const address = s.business_address || 'Industrial Area, Accra, Ghana'
   const whatsapp = s.business_whatsapp || '233200000000'
 
   const handleSubmit = async (e: React.FormEvent) => {

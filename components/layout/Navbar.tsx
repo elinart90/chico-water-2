@@ -18,6 +18,7 @@ const DARK_HERO_PAGES = ["/", "/products", "/about", "/contact"];
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [user, setUser] = useState<{ role: string } | null>(null);
   const pathname = usePathname();
   const s = useSettings();
 
@@ -36,6 +37,15 @@ export default function Navbar() {
   useEffect(() => {
     setOpen(false);
   }, [pathname]);
+
+  useEffect(() => {
+    fetch("/api/auth/me")
+      .then((r) => r.json())
+      .then((d) => {
+        if (d.user) setUser(d.user);
+      })
+      .catch(() => {});
+  }, []);
 
   return (
     <>
@@ -109,6 +119,19 @@ export default function Navbar() {
                 </Link>
               );
             })}
+            {user && (
+              <Link
+                href="/complaints"
+                className={cn(
+                  "px-4 py-2 rounded-full text-sm font-medium transition-colors duration-300",
+                  onDarkBg
+                    ? "text-white/75 hover:text-white hover:bg-white/10"
+                    : "text-slate-600 hover:text-water-700 hover:bg-slate-50",
+                )}
+              >
+                Complaints
+              </Link>
+            )}
           </nav>
 
           <div className="hidden lg:flex items-center gap-1.5 shrink-0">
@@ -195,6 +218,15 @@ export default function Navbar() {
                   </Link>
                 );
               })}
+              {user && (
+                <Link
+                  href="/complaints"
+                  onClick={() => setOpen(false)}
+                  className="block px-4 py-3 rounded-xl font-medium text-sm text-white/80 hover:bg-white/10 transition-colors"
+                >
+                  Complaints
+                </Link>
+              )}
               <div className="pt-4 mt-4 border-t border-white/10 space-y-2">
                 <Link
                   href="/track"

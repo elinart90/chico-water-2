@@ -1,7 +1,9 @@
--- Chico Water Limited — Supabase Schema
--- Run this in your Supabase SQL editor
+-- ============================================================
+-- Chico Water Limited — Full Supabase Schema
+-- Run this in your Supabase SQL Editor
+-- ============================================================
 
--- Users table (custom auth, no Supabase Auth)
+-- Users table (custom auth — no Supabase Auth)
 create table if not exists users (
   id uuid primary key default gen_random_uuid(),
   name text not null,
@@ -10,7 +12,8 @@ create table if not exists users (
   password_hash text not null,
   role text not null default 'customer' check (role in ('customer','salesperson','admin','driver')),
   segment text check (segment in ('household','retail','wholesale','corporate')),
-  created_at timestamptz default now()
+  created_at timestamptz default now(),
+  updated_at timestamptz default now()
 );
 
 -- Products
@@ -28,14 +31,15 @@ create table if not exists products (
   stock integer default 0,
   image_url text,
   active boolean default true,
-  created_at timestamptz default now()
+  created_at timestamptz default now(),
+  updated_at timestamptz default now()
 );
 
 -- Orders
 create table if not exists orders (
   id uuid primary key default gen_random_uuid(),
   order_number text unique not null,
-  customer_id uuid references users(id),
+  customer_id uuid references users(id) on delete set null,
   customer_name text not null,
   customer_phone text not null,
   segment text not null check (segment in ('household','retail','wholesale','corporate')),
@@ -50,44 +54,71 @@ create table if not exists orders (
   delivery_region text not null,
   delivery_notes text,
   preferred_date date,
-  salesperson_id uuid references users(id),
-  driver_id uuid references users(id),
+  salesperson_id uuid references users(id) on delete set null,
+  driver_id uuid references users(id) on delete set null,
   created_at timestamptz default now(),
+  updated_at timestamptz default now()
+);
+
+-- Settings
+create table if not exists settings (
+  key text primary key,
+  value text not null,
+  label text not null,
+  description text,
+  category text not null,
+  type text not null default 'text' check (type in ('text','number','boolean','select','textarea','color','time','email','phone','url')),
+  options text,
+  is_public boolean default false,
   updated_at timestamptz default now()
 );
 
 -- Inventory log
 create table if not exists inventory_log (
   id uuid primary key default gen_random_uuid(),
-  product_id uuid references products(id),
+  product_id uuid references products(id) on delete cascade,
   change_amount integer not null,
   reason text,
+  order_id uuid references orders(id) on delete set null,
   created_at timestamptz default now()
 );
 
--- Seed products
+-- ============================================================
+-- DISABLE RLS (enable and add policies when ready for production)
+-- ============================================================
+alter table users disable row level security;
+alter table products disable row level security;
+alter table orders disable row level security;
+alter table settings disable row level security;
+alter table inventory_log disable row level security;
+
+-- Grant full access to anon and authenticated roles
+grant all on users to anon, authenticated;
+grant all on products to anon, authenticated;
+grant all on orders to anon, authenticated;
+grant all on settings to anon, authenticated;
+grant all on inventory_log to anon, authenticated;
+
+-- ============================================================
+-- STOCK DECREMENT FUNCTION
+-- ============================================================
+create or replace function decrement_stock(p_product_id uuid, p_quantity integer)
+returns void as $$
+begin
+  update products set stock = greatest(0, stock - p_quantity), updated_at = now()
+  where id = p_product_id;
+end;
+$$ language plpgsql security definer;
+
+-- ============================================================
+-- SEED PRODUCTS
+-- ============================================================
 insert into products (name, description, category, size, unit, price_household, price_retail, price_wholesale, price_corporate, stock) values
-  ('500ml Bottled Water', 'Pure 500ml water, great for on-the-go.', 'bottled', '500ml', 'bottle', 2.50, 2.20, 1.80, 1.90, 5000),
-  ('1L Bottled Water', 'Premium 1-litre bottled water.', 'bottled', '1L', 'bottle', 4.50, 4.00, 3.20, 3.50, 3000),
-  ('1.5L Bottled Water', 'Family-size pure water.', 'bottled', '1.5L', 'bottle', 6.00, 5.40, 4.50, 4.80, 2000),
-  ('Sachet Water (Bag)', '30 sachets per bag.', 'sachet', '500ml x 30', 'bag', 8.00, 7.00, 5.50, 6.00, 8000),
-  ('Sachet Water (Crate)', '12 bags per crate.', 'sachet', '30-sachet bags x 12', 'crate', 90.00, 80.00, 62.00, 68.00, 400),
-  ('Empty 500ml Bottles', 'Food-grade PET 500ml bottles.', 'empty_bottle', '500ml', 'pack of 24', 18.00, 15.00, 12.00, 13.00, 10000),
-  ('Empty 1L Bottles', 'Durable 1L PET bottles.', 'empty_bottle', '1L', 'pack of 12', 20.00, 17.00, 14.00, 15.50, 6000);
-
--- RLS policies (enable after setup)
-alter table orders enable row level security;
-alter table users enable row level security;
-alter table products enable row level security;
-
--- Enable customers to read their own orders
-create policy "Customers read own orders" on orders
-  for select using (customer_id::text = current_setting('app.user_id', true));
-
--- Salesperson can read all orders
-create policy "Salesperson reads all orders" on orders
-  for select using (current_setting('app.user_role', true) in ('salesperson','admin'));
-
--- Products are public for select
-create policy "Products are viewable by all" on products
-  for select using (active = true);
+  ('500ml Bottled Water', 'Pure, refreshing 500ml bottled water — perfect for on-the-go.', 'bottled', '500ml', 'bottle', 2.50, 2.20, 1.80, 1.90, 5000),
+  ('1L Bottled Water', 'Premium 1-litre bottled water for home and office.', 'bottled', '1L', 'bottle', 4.50, 4.00, 3.20, 3.50, 3000),
+  ('1.5L Bottled Water', 'Family-sized 1.5L pure water bottle.', 'bottled', '1.5L', 'bottle', 6.00, 5.40, 4.50, 4.80, 2000),
+  ('Sachet Water (Bag)', '30 sachets of pure 500ml water per bag.', 'sachet', '500ml x 30', 'bag', 8.00, 7.00, 5.50, 6.00, 8000),
+  ('Sachet Water (Crate)', '12 bags per crate — ideal for wholesale buyers.', 'sachet', '30-sachet bags x 12', 'crate', 90.00, 80.00, 62.00, 68.00, 400),
+  ('Empty 500ml Bottles', 'Premium empty 500ml PET bottles, food-grade.', 'empty_bottle', '500ml', 'pack of 24', 18.00, 15.00, 12.00, 13.00, 10000),
+  ('Empty 1L Bottles', 'Durable 1-litre empty PET bottles.', 'empty_bottle', '1L', 'pack of 12', 20.00, 17.00, 14.00, 15.50, 6000)
+on conflict do nothing;

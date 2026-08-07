@@ -7,7 +7,7 @@ import toast from "react-hot-toast";
 import { CustomerSegment } from "@/types";
 
 const segments: { id: CustomerSegment; label: string }[] = [
-  { id: "household", label: "Household" },
+  // { id: 'household', label: 'Household' },
   { id: "retail", label: "Retail" },
   { id: "wholesale", label: "Wholesale" },
   { id: "corporate", label: "Corporate" },
@@ -28,14 +28,24 @@ export default function RegisterPage() {
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    await new Promise((r) => setTimeout(r, 1200));
-    toast.success("Account created! Welcome to Chico Water.");
-    localStorage.setItem(
-      "chico_user",
-      JSON.stringify({ email: form.email, role: "customer", name: form.name }),
-    );
-    router.push("/dashboard/customer");
-    setLoading(false);
+    try {
+      const res = await fetch("/api/auth/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+      const data = await res.json();
+      if (res.ok) {
+        toast.success("Account created! Welcome to Chico Water.");
+        router.push("/dashboard/customer");
+      } else {
+        toast.error(data.message || "Registration failed");
+      }
+    } catch {
+      toast.error("Network error. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (

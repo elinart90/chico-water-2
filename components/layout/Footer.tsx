@@ -38,6 +38,7 @@ export default function Footer() {
                 { label: 'Products', href: '/products' },
                 { label: 'Place an Order', href: '/order' },
                 { label: 'Track Your Order', href: '/track' },
+                { label: 'Wholesale Inquiry', href: '/order?segment=wholesale' },
                 { label: 'About Us', href: '/about' },
                 { label: 'Contact', href: '/contact' },
               ].map(link => (
@@ -69,7 +70,7 @@ export default function Footer() {
                 <div className="w-9 h-9 rounded-lg bg-white/5 flex items-center justify-center shrink-0">
                   <MapPin className="w-4 h-4 text-water-400" />
                 </div>
-                <span className="text-sm text-slate-500 pt-1.5">{s.business_address || 'Pakyi No.1, Kumasi, Ghana'}</span>
+                <span className="text-sm text-slate-500 pt-1.5">{s.business_address || 'Industrial Area, Accra, Ghana'}</span>
               </li>
               <li className="flex items-center gap-3">
                 <div className="w-9 h-9 rounded-lg bg-white/5 flex items-center justify-center shrink-0">
@@ -84,7 +85,7 @@ export default function Footer() {
                   <Mail className="w-4 h-4 text-water-400" />
                 </div>
                 <a href={`mailto:${s.business_email}`} className="text-sm hover:text-water-400 transition-colors">
-                  {s.business_email || 'orders@chicowater.com'}
+                  {s.business_email || 'info@chicowaterlimited.com'}
                 </a>
               </li>
             </ul>

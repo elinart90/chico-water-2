@@ -36,11 +36,16 @@ export const metadata: Metadata = {
   description:
     "Ghana's premium water supplier — bottled water, sachet water, and packaging delivered to your door.",
   keywords:
-    "water delivery Ghana, bottled water Kumasi, sachet water wholesale, Chico Water",
+    "water delivery Ghana, bottled water Accra, sachet water wholesale, Chico Water, mineral water Ghana",
   openGraph: {
     title: "Chico Water Limited",
     description: "Inspire natural mineral water, delivered across Ghana.",
     type: "website",
+  },
+  icons: {
+    icon: "https://vlufaqecdxfdvmpxmfas.supabase.co/storage/v1/object/public/assets/chico-logo.png",
+    shortcut: "https://vlufaqecdxfdvmpxmfas.supabase.co/storage/v1/object/public/assets/chico-logo.png",
+    apple: "https://vlufaqecdxfdvmpxmfas.supabase.co/storage/v1/object/public/assets/chico-logo.png",
   },
 };
 

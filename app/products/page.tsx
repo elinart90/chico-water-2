@@ -1,14 +1,14 @@
 'use client'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { Filter, Search, ArrowRight, ChevronDown, Package } from 'lucide-react'
 import Navbar from '@/components/layout/Navbar'
 import Footer from '@/components/layout/Footer'
 import ProductMedia from '@/components/ProductMedia'
-import { MOCK_PRODUCTS } from '@/lib/mock-data'
 import { formatCurrency } from '@/lib/utils'
-import { CustomerSegment } from '@/types'
+import { Product, CustomerSegment } from '@/types'
+import toast from 'react-hot-toast'
 
 const categories = [
   { id: 'all', label: 'All' },
@@ -23,17 +23,27 @@ const segments: { id: CustomerSegment; label: string }[] = [
   { id: 'corporate', label: 'Corporate' },
 ]
 
-function getPriceForSegment(product: typeof MOCK_PRODUCTS[0], segment: CustomerSegment) {
+function getPriceForSegment(product: Product, segment: CustomerSegment) {
   const map = { household: product.price_household, retail: product.price_retail, wholesale: product.price_wholesale, corporate: product.price_corporate }
   return map[segment]
 }
 
 export default function ProductsPage() {
+  const [products, setProducts] = useState<Product[]>([])
+  const [loading, setLoading] = useState(true)
   const [category, setCategory] = useState('all')
   const [segment, setSegment] = useState<CustomerSegment>('retail')
   const [search, setSearch] = useState('')
 
-  const filtered = MOCK_PRODUCTS.filter(p =>
+  useEffect(() => {
+    fetch('/api/products')
+      .then(r => r.json())
+      .then(d => { if (d.products) setProducts(d.products) })
+      .catch(() => toast.error('Failed to load products'))
+      .finally(() => setLoading(false))
+  }, [])
+
+  const filtered = products.filter(p =>
     (category === 'all' || p.category === category) &&
     (p.name.toLowerCase().includes(search.toLowerCase()) || p.description.toLowerCase().includes(search.toLowerCase()))
   )
@@ -122,7 +132,11 @@ export default function ProductsPage() {
         </div>
 
         {/* Products grid */}
-        {filtered.length === 0 ? (
+        {loading ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            {[...Array(8)].map((_, i) => <div key={i} className="h-72 rounded-2xl shimmer" />)}
+          </div>
+        ) : filtered.length === 0 ? (
           <div className="text-center py-20 card p-12">
             <Package className="w-12 h-12 text-slate-300 mx-auto mb-4" />
             <p className="heading-display text-xl text-slate-700">No products found</p>

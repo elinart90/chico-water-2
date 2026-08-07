@@ -3,35 +3,31 @@ node_modules/
 /.pnp
 .pnp.js
 
-# Next.js build output
+# Next.js
 /.next/
 /out/
 
-# Environment variables — NEVER commit these
+# Environment — NEVER commit these
 .env
 .env.local
 .env.development.local
 .env.test.local
 .env.production.local
 
-# Production build
+# Build
 /build
 
-# Debug logs
+# Logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-# OS files
+# OS
 .DS_Store
-.DS_Store?
-._*
-.Spotlight-V100
-.Trashes
 Thumbs.db
 desktop.ini
 
-# Editor directories
+# Editor
 .vscode/
 .idea/
 *.swp
@@ -44,9 +40,7 @@ next-env.d.ts
 # Vercel
 .vercel
 
-# Testing
-/coverage
-
 # Misc
 .cache/
 *.log
+/coverage

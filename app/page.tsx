@@ -6,23 +6,19 @@ import {
   ArrowRight,
   Droplets,
   Package,
-  ShoppingBag,
   Building2,
-  Home,
   Store,
   CheckCircle,
   Truck,
   Clock,
   Shield,
-  Star,
   ChevronRight,
   Phone,
   MapPin,
-  TrendingUp,
 } from "lucide-react";
 import { formatCurrency } from "@/lib/utils";
 import { useSettings } from "@/components/SettingsProvider";
-import { MOCK_PRODUCTS } from "@/lib/mock-data";
+import { Product } from "@/types";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import ProductMedia from "@/components/ProductMedia";
@@ -30,7 +26,7 @@ import ProductMedia from "@/components/ProductMedia";
 function useCountUp(target: number, duration = 2000, start = false) {
   const [count, setCount] = useState(0);
   useEffect(() => {
-    if (!start) return;
+    if (!start || !target) return;
     let startTime: number;
     const step = (timestamp: number) => {
       if (!startTime) startTime = timestamp;
@@ -72,7 +68,7 @@ const features = [
   {
     icon: Truck,
     title: "Same-Day Delivery",
-    desc: "Order before 12PM, delivered same day across Kumasi and surrounding areas.",
+    desc: "Order before 12PM, delivered same day across Greater Accra and surrounding areas.",
   },
   {
     icon: Shield,
@@ -100,8 +96,8 @@ const testimonials = [
   },
   {
     name: "Abena Owusu",
-    role: "Retail shop, Pakyi No.1",
-    text: "I order every week. The app makes it so easy and the delivery guys are always professional.",
+    role: "Office Manager, Accra",
+    text: "Our corporate account is seamless. One call and water is here. The team is professional and reliable.",
     stars: 5,
   },
   {
@@ -115,10 +111,11 @@ const testimonials = [
 export default function HomePage() {
   const statsRef = useRef<HTMLDivElement>(null);
   const [statsVisible, setStatsVisible] = useState(false);
+  const [products, setProducts] = useState<Product[]>([]);
   const s = useSettings();
 
   const orders = useCountUp(
-    parseInt(s.home_stats_orders || "50"),
+    parseInt(s.home_stats_orders || "50000"),
     2200,
     statsVisible,
   );
@@ -139,7 +136,14 @@ export default function HomePage() {
     return () => observer.disconnect();
   }, []);
 
-  const featuredProducts = MOCK_PRODUCTS.slice(0, 3);
+  useEffect(() => {
+    fetch("/api/products")
+      .then((r) => r.json())
+      .then((d) => {
+        if (d.products) setProducts(d.products.slice(0, 3));
+      })
+      .catch(() => {});
+  }, []);
 
   return (
     <div className="min-h-screen">
@@ -162,7 +166,7 @@ export default function HomePage() {
           <div className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-2 mb-8 backdrop-blur-sm">
             <span className="w-1.5 h-1.5 rounded-full bg-sky-400" />
             <span className="text-[11px] sm:text-xs font-medium uppercase tracking-[0.25em] text-white/70">
-              Premium Water · Pakyi No.1, Kumasi · Est. {s.business_founded || "2026"}
+              Premium Water · Ghana · Est. {s.business_founded || "2008"}
             </span>
           </div>
 
@@ -190,7 +194,7 @@ export default function HomePage() {
             {[
               { value: "99.9%", label: "Purity" },
               { value: s.home_stats_regions || "16", label: "Regions" },
-              { value: s.business_founded || "2026", label: "Est." },
+              { value: s.business_founded || "2008", label: "Est." },
             ].map((item) => (
               <div key={item.label} className="text-center px-2">
                 <p className="hero-stat-value">{item.value}</p>
@@ -217,7 +221,7 @@ export default function HomePage() {
                 icon: MapPin,
               },
               {
-                value: s.business_founded || "2026",
+                value: s.business_founded || "2008",
                 label: "Year established",
                 icon: Droplets,
               },
@@ -277,83 +281,91 @@ export default function HomePage() {
               </Link>
             ))}
           </div>
+          <p className="text-center text-sm text-slate-400 mt-8">
+            Are you a household customer?{' '}
+            <Link href="/order?segment=household" className="text-water-600 font-semibold hover:underline">
+              Order here →
+            </Link>
+          </p>
         </div>
       </section>
 
       {/* PRODUCTS PREVIEW */}
-      <section className="py-24 bg-slate-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end mb-14 gap-6">
-            <div>
-              <div className="section-tag mb-4">Our Products</div>
-              <h2 className="heading-display text-4xl text-slate-900">
-                Premium water products
-              </h2>
-            </div>
-            <Link
-              href="/products"
-              className="inline-flex items-center gap-2 text-water-600 font-semibold hover:gap-3 transition-all group"
-            >
-              View all products
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
-            </Link>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {featuredProducts.map((product) => (
-              <div
-                key={product.id}
-                className="card-interactive overflow-hidden group"
+      {products.length > 0 && (
+        <section className="py-24 bg-slate-50">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end mb-14 gap-6">
+              <div>
+                <div className="section-tag mb-4">Our Products</div>
+                <h2 className="heading-display text-4xl text-slate-900">
+                  Premium water products
+                </h2>
+              </div>
+              <Link
+                href="/products"
+                className="inline-flex items-center gap-2 text-water-600 font-semibold hover:gap-3 transition-all group"
               >
+                View all products
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+              </Link>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {products.map((product) => (
                 <div
-                  className={`h-48 flex items-center justify-center relative overflow-hidden ${
-                    product.category === "bottled"
-                      ? "bg-gradient-to-br from-blue-50 to-cyan-100"
-                      : product.category === "sachet"
-                        ? "bg-gradient-to-br from-green-50 to-emerald-100"
-                        : "bg-gradient-to-br from-amber-50 to-yellow-100"
-                  }`}
+                  key={product.id}
+                  className="card-interactive overflow-hidden group"
                 >
-                  <ProductMedia
-                    product={product}
-                    className="group-hover:scale-105 transition-transform duration-300"
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                  />
-                </div>
-                <div className="p-6">
-                  <div className="flex items-start justify-between mb-2">
-                    <h3 className="font-display font-bold text-slate-900 text-lg leading-tight">
-                      {product.name}
-                    </h3>
-                    <span className="product-badge ml-2 shrink-0">
-                      {product.size}
-                    </span>
+                  <div
+                    className={`h-48 flex items-center justify-center relative overflow-hidden ${
+                      product.category === "bottled"
+                        ? "bg-gradient-to-br from-blue-50 to-cyan-100"
+                        : product.category === "sachet"
+                          ? "bg-gradient-to-br from-green-50 to-emerald-100"
+                          : "bg-gradient-to-br from-amber-50 to-yellow-100"
+                    }`}
+                  >
+                    <ProductMedia
+                      product={product}
+                      className="group-hover:scale-105 transition-transform duration-300"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    />
                   </div>
-                  <p className="text-slate-500 text-sm mb-5 leading-relaxed">
-                    {product.description}
-                  </p>
-                  <div className="flex items-center justify-between pt-4 border-t border-slate-100">
-                    <div>
-                      <span className="text-xs text-slate-400 uppercase tracking-wider font-medium">from</span>
-                      <div className="text-2xl font-display font-bold text-water-600">
-                        {formatCurrency(product.price_wholesale)}
-                      </div>
-                      <span className="text-xs text-slate-400">
-                        per {product.unit}
+                  <div className="p-6">
+                    <div className="flex items-start justify-between mb-2">
+                      <h3 className="font-display font-bold text-slate-900 text-lg leading-tight">
+                        {product.name}
+                      </h3>
+                      <span className="product-badge ml-2 shrink-0">
+                        {product.size}
                       </span>
                     </div>
-                    <Link
-                      href={`/order?product=${product.id}`}
-                      className="btn-primary text-sm px-4 py-2.5"
-                    >
-                      Order
-                    </Link>
+                    <p className="text-slate-500 text-sm mb-5 leading-relaxed">
+                      {product.description}
+                    </p>
+                    <div className="flex items-center justify-between pt-4 border-t border-slate-100">
+                      <div>
+                        <span className="text-xs text-slate-400 uppercase tracking-wider font-medium">from</span>
+                        <div className="text-2xl font-display font-bold text-water-600">
+                          {formatCurrency(product.price_wholesale)}
+                        </div>
+                        <span className="text-xs text-slate-400">
+                          per {product.unit}
+                        </span>
+                      </div>
+                      <Link
+                        href={`/order?product=${product.id}`}
+                        className="btn-primary text-sm px-4 py-2.5"
+                      >
+                        Order
+                      </Link>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* FEATURES */}
       <section className="py-24 bg-white">
